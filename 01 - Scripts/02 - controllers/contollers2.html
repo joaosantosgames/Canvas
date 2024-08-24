@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas com Controladores</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        const speed = 5;
+
+        // Desenha o retângulo inicial
+        function drawRect() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'green';
+            ctx.fillRect(x, y, 50, 50);
+        }
+
+        drawRect();
+
+        // Controle por teclas de seta
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    y -= speed;
+                    break;
+                case 'ArrowDown':
+                    y += speed;
+                    break;
+                case 'ArrowLeft':
+                    x -= speed;
+                    break;
+                case 'ArrowRight':
+                    x += speed;
+                    break;
+            }
+            drawRect();
+        });
+
+        // Controle por mouse
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            x = e.clientX - rect.left - 25;
+            y = e.clientY - rect.top - 25;
+            drawRect();
+        });
+
+        // Controle por Gamepad
+        window.addEventListener("gamepadconnected", (event) => {
+            console.log("Gamepad conectado:", event.gamepad);
+            updateGamepadStatus();
+        });
+
+        function updateGamepadStatus() {
+            const gamepads = navigator.getGamepads();
+            for (let i = 0; i < gamepads.length; i++) {
+                const gp = gamepads[i];
+                if (gp) {
+                    const xAxis = gp.axes[0];
+                    const yAxis = gp.axes[1];
+                    x += xAxis * speed;
+                    y += yAxis * speed;
+                    drawRect();
+                }
+            }
+            requestAnimationFrame(updateGamepadStatus);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas com Obstáculos</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const speed = 5;
+        let player = { x: 50, y: 50, width: 50, height: 50, color: 'blue', dx: 0, dy: 0 };
+
+        class Obstacle {
+            constructor(x, y, width, height, color) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        }
+
+        const obstacles = [
+            new Obstacle(200, 150, 100, 100, 'red'), // Grande
+            new Obstacle(400, 300, 50, 50, 'green'), // Pequeno
+            new Obstacle(600, 100, 150, 50, 'purple'), // Retângulo
+            new Obstacle(100, 400, 50, 150, 'orange') // Retângulo vertical
+        ];
+
+        function drawPlayer() {
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function updatePlayerPosition() {
+            player.x += player.dx;
+            player.y += player.dy;
+
+            // Limitar movimento dentro do canvas
+            if (player.x < 0) player.x = 0;
+            if (player.y < 0) player.y = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+            if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
+        }
+
+        function detectCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        function handleCollision() {
+            obstacles.forEach(obstacle => {
+                if (detectCollision(player, obstacle)) {
+                    console.log('Colisão detectada!');
+                    // Parar o movimento do jogador
+                    player.dx = 0;
+                    player.dy = 0;
+                }
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updatePlayerPosition();
+            handleCollision();
+            drawPlayer();
+            obstacles.forEach(obstacle => obstacle.draw());
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    player.dy = -speed;
+                    break;
+                case 'ArrowDown':
+                    player.dy = speed;
+                    break;
+                case 'ArrowLeft':
+                    player.dx = -speed;
+                    break;
+                case 'ArrowRight':
+                    player.dx = speed;
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    player.dy = 0;
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowRight':
+                    player.dx = 0;
+                    break;
+            }
+        });
+
+        animate();
+    </script>
+</body>
+</html>

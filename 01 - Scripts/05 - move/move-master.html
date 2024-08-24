@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas com Movimento</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const speed = 5;
+        let x = 50, y = 50;
+        let dx = 0, dy = 0;
+        let backgroundX = 0;
+
+        // Carregar imagem
+        const img = new Image();
+        img.src = 'https://via.placeholder.com/50';
+
+        // Desenhar retângulo
+        function drawRect() {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(x, y, 50, 50);
+        }
+
+        // Desenhar imagem
+        function drawImage() {
+            ctx.drawImage(img, x, y);
+        }
+
+        // Desenhar plano de fundo
+        function drawBackground() {
+            ctx.fillStyle = 'lightgray';
+            ctx.fillRect(backgroundX, 0, canvas.width, canvas.height);
+            ctx.fillRect(backgroundX + canvas.width, 0, canvas.width, canvas.height);
+        }
+
+        // Atualizar posição
+        function updatePosition() {
+            x += dx;
+            y += dy;
+            if (x < 0) x = 0;
+            if (y < 0) y = 0;
+            if (x + 50 > canvas.width) x = canvas.width - 50;
+            if (y + 50 > canvas.height) y = canvas.height - 50;
+        }
+
+        // Atualizar plano de fundo
+        function updateBackground() {
+            backgroundX -= speed / 2;
+            if (backgroundX <= -canvas.width) {
+                backgroundX = 0;
+            }
+        }
+
+        // Função de animação
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateBackground();
+            drawBackground();
+            updatePosition();
+            drawRect();
+            drawImage();
+            requestAnimationFrame(animate);
+        }
+
+        // Controle de movimento
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    dy = -speed;
+                    break;
+                case 'ArrowDown':
+                    dy = speed;
+                    break;
+                case 'ArrowLeft':
+                    dx = -speed;
+                    break;
+                case 'ArrowRight':
+                    dx = speed;
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    dy = 0;
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowRight':
+                    dx = 0;
+                    break;
+            }
+        });
+
+        img.onload = () => {
+            animate();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas com Rotação</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let angle1 = 0;
+        let angle2 = 0;
+        let angle3 = 0;
+
+        function drawRotatingRect(x, y, width, height, angle, color) {
+            ctx.save();
+            ctx.translate(x + width / 2, y + height / 2);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.fillStyle = color;
+            ctx.fillRect(-width / 2, -height / 2, width, height);
+            ctx.restore();
+        }
+
+        function drawRotatingCircle(x, y, radius, angle, color) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawRotatingTriangle(x, y, size, angle, color) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(0, -size / 2);
+            ctx.lineTo(size / 2, size / 2);
+            ctx.lineTo(-size / 2, size / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Rotação contínua
+            drawRotatingRect(100, 100, 100, 50, angle1, 'blue');
+            angle1 += 1;
+
+            // Rotação em torno de um ponto específico
+            drawRotatingCircle(400, 300, 50, angle2, 'green');
+            angle2 += 2;
+
+            // Rotação de múltiplos objetos
+            drawRotatingTriangle(600, 400, 100, angle3, 'red');
+            angle3 += 3;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

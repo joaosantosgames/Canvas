@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas com Gravidade</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const gravity = 0.5;
+        const friction = 0.9;
+
+        class Shape {
+            constructor(x, y, dy) {
+                this.x = x;
+                this.y = y;
+                this.dy = dy;
+            }
+
+            applyGravity() {
+                if (this.y + this.dy > canvas.height) {
+                    this.dy = -this.dy * friction;
+                } else {
+                    this.dy += gravity;
+                }
+                this.y += this.dy;
+            }
+        }
+
+        class Rectangle extends Shape {
+            constructor(x, y, width, height, color) {
+                super(x, y, 2);
+                this.width = width;
+                this.height = height;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+
+            update() {
+                this.applyGravity();
+                this.draw();
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(x, y, radius, color) {
+                super(x, y, 2);
+                this.radius = radius;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            update() {
+                this.applyGravity();
+                this.draw();
+            }
+        }
+
+        class Triangle extends Shape {
+            constructor(x, y, size, color) {
+                super(x, y, 2);
+                this.size = size;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x - this.size / 2, this.y + this.size);
+                ctx.lineTo(this.x + this.size / 2, this.y + this.size);
+                ctx.closePath();
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.applyGravity();
+                this.draw();
+            }
+        }
+
+        class Text extends Shape {
+            constructor(x, y, text, color) {
+                super(x, y, 2);
+                this.text = text;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.font = '30px Arial';
+                ctx.fillText(this.text, this.x, this.y);
+            }
+
+            update() {
+                this.applyGravity();
+                this.draw();
+            }
+        }
+
+        const shapes = [
+            new Rectangle(100, 50, 100, 50, 'red'),
+            new Circle(300, 50, 30, 'blue'),
+            new Triangle(500, 50, 50, 'green'),
+            new Text(700, 50, 'X', 'purple')
+        ];
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            shapes.forEach(shape => shape.update());
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
