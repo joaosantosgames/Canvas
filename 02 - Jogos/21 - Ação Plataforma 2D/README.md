@@ -1,4 +1,4 @@
-# Metal Slug Clone
+# Jogo Ação Plataforma 2D
 
 Este é um clone simples do jogo Metal Slug, desenvolvido em JavaScript utilizando a tag `<canvas>` para renderização gráfica. O objetivo do jogo é controlar um personagem que deve derrotar inimigos enquanto coleta pontos e gerencia sua saúde e vidas.
 
