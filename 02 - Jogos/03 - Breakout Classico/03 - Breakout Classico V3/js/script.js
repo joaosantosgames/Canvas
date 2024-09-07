@@ -108,3 +108,5 @@ document.addEventListener('keyup', keyUpHandler, false);
 
 // Inicia o jogo
 draw();
+
+
