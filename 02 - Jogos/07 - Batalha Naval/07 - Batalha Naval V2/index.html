@@ -8,9 +8,14 @@
 </head>
 <body>
     <h1>Batalha Naval</h1>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <p id="status"></p>
-    <button id="resetButton">Reiniciar Jogo</button>
+    <div class="board-container">
+        <div id="player-board" class="board"></div>
+        <div id="computer-board" class="board"></div>
+    </div>
+    <div id="info">
+        <p id="message"></p>
+        <button id="reset-button">Reiniciar Jogo</button>
+    </div>
     <script src="./js/script.js"></script>
 </body>
 </html>
