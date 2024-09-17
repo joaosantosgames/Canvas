@@ -37,8 +37,13 @@ JavaScript é uma linguagem de programação essencial para a web, permitindo a 
 - **Eventos**: Captura de interações do usuário.
 - **Lógica de Jogo**: Controle de fluxo, detecção de colisão, etc.
 
-## Canvas
-O elemento `<canvas>` do HTML5 permite desenhar gráficos 2D via JavaScript, sendo uma ferramenta poderosa para o desenvolvimento de jogos.
+# Canvas em JavaScript
+
+## Introdução
+
+O elemento `<canvas>` do HTML5, combinado com JavaScript, permite a criação de gráficos dinâmicos e interativos diretamente no navegador. Ele é amplamente utilizado para criar jogos, animações, gráficos de dados e outras visualizações interativas.
+
+## Recursos Básicos
 
 ### Recursos
 - **Documentação Oficial**: [MDN Web Docs - Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
@@ -59,24 +64,6 @@ Desenvolver jogos usando HTML5, CSS3, JavaScript e Canvas é uma excelente intro
 ## Recursos Adicionais
 - [Criando um Jogo 2D com Canvas](https://www.devmedia.com.br/jogos-em-html5-criando-um-jogo-2d-com-canvas/32186) - Um artigo detalhado sobre a criação de jogos com Canvas[^1^][5].
 - [Desenvolvimento de Jogos com JavaScript](https://www.youtube.com/watch?v=z3r8up9cz3w) - Tutorial em vídeo sobre como criar um jogo simples com JavaScript e HTML5[^2^][2].
-
-## Conclusão
-HTML5, CSS3, JavaScript e Canvas são ferramentas poderosas e acessíveis para o desenvolvimento de jogos web. Com uma vasta documentação e recursos disponíveis, são uma excelente base para desenvolvedores iniciantes explorarem e aprenderem.
-
-[^3^][1]: MDN Web Docs - HTML5
-[^2^][2]: MDN Web Docs - CSS
-[^4^][3]: MDN Web Docs - JavaScript
-[^5^][4]: MDN Web Docs - Canvas API
-[^1^][5]: DevMedia - Jogos em HTML5: Criando um jogo 2D com Canvas
-
-
-# Canvas em JavaScript
-
-## Introdução
-
-O elemento `<canvas>` do HTML5, combinado com JavaScript, permite a criação de gráficos dinâmicos e interativos diretamente no navegador. Ele é amplamente utilizado para criar jogos, animações, gráficos de dados e outras visualizações interativas.
-
-## Recursos Básicos
 
 ### 1. Configuração do Canvas
 
@@ -239,3 +226,9 @@ function moveEnemyTowardsPlayer(enemy, player) {
 O canvas em JavaScript é uma ferramenta poderosa para criar jogos e outras visualizações interativas. Com uma combinação de recursos básicos, intermediários e avançados, você pode criar experiências ricas e envolventes diretamente no navegador.
 
 Para mais informações, consulte a documentação do Canvas API.
+
+[^3^][1]: MDN Web Docs - HTML5
+[^2^][2]: MDN Web Docs - CSS
+[^4^][3]: MDN Web Docs - JavaScript
+[^5^][4]: MDN Web Docs - Canvas API
+[^1^][5]: DevMedia - Jogos em HTML5: Criando um jogo 2D com Canvas
