@@ -17,18 +17,18 @@ Para adicionar novas músicas ao jogo, siga as instruções abaixo:
 
 Exemplo de Estrutura de Pastas:
 
-Jogo-Music/ 
-├── assets/ 
-│ └── musicas/ 
-│ ├── sua_musica1.mp3 
-│ ├── sua_musica2.mp3 
-│ └── sua_musica3.mp3 
-├── css/ 
-│ └── styles.css 
-├── js/ 
-│ ├── script.js 
-│ └── audio.js 
-└── index.html
+    Jogo-Music/ 
+    ├── assets/ 
+    │ └── musicas/ 
+    │ ├── sua_musica1.mp3 
+    │ ├── sua_musica2.mp3 
+    │ └── sua_musica3.mp3 
+    ├── css/ 
+    │ └── styles.css 
+    ├── js/ 
+    │ ├── script.js 
+    │ └── audio.js 
+    └── index.html
 
 
 ## Tecnologias Utilizadas
