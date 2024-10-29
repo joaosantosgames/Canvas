@@ -1,0 +1,41 @@
+# Ignorar arquivos de sistema operacionais
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar diretórios de dependências
+node_modules/
+vendor/
+
+# Ignorar diretórios de ambientes virtuais
+venv/
+.env/
+.venv/
+
+# Ignorar arquivos de configuração pessoal
+*.env
+*.local
+
+# Ignorar arquivos de saída de build
+dist/ 
+0hh1-master/
+build/
+out/
+
+# Ignorar arquivos de cache
+.cache/
+*.pyc
+
+# Ignorar IDEs e editores de texto
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar outros arquivos específicos do projeto
+*.bak
+*.tmp
+
+# Fim do arquivo .gitignore
