@@ -21,6 +21,7 @@ venv/
 # Ignorar arquivos de saída de build
 dist/ 
 0hh1-master/
+Scripts/
 build/
 out/
 
