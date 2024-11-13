@@ -1,0 +1,20 @@
+/* Estiliza o parágrafo quando o mouse está sobre ele */
+.paragrafo:hover {
+    background-color: #f0f0f0;
+}
+
+/* Adiciona conteúdo antes do parágrafo */
+.paragrafo::before {
+    content: "Nota: ";
+    font-weight: bold;
+}
+
+/* Estiliza o primeiro item da lista */
+ul li:first-child {
+    color: red;
+}
+
+/* Estiliza o último parágrafo */
+p:last-of-type {
+    color: blue;
+}

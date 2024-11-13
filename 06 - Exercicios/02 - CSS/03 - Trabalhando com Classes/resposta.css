@@ -1,0 +1,11 @@
+/* Estiliza o título principal */
+.titulo {
+    color: #007bff;
+    text-align: center;
+}
+
+/* Estiliza o parágrafo com destaque */
+.texto-destaque {
+    color: #e63946;
+    font-weight: bold;
+}

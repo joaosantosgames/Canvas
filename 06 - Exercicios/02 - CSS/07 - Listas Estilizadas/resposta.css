@@ -1,0 +1,10 @@
+/* Estiliza as listas */
+ul {
+    list-style-type: square;
+    color: #333;
+}
+
+ol {
+    list-style-type: upper-roman;
+    color: #007bff;
+}

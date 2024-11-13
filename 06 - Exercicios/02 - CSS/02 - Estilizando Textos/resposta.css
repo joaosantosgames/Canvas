@@ -1,0 +1,6 @@
+/* Estiliza o texto do parágrafo */
+p {
+    color: #333;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
