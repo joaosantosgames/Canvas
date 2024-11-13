@@ -4,9 +4,9 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #87CEEB;
+    background-color: #000;
 }
 
 canvas {
-    border: 2px solid black;
+    border: 1px solid #fff;
 }

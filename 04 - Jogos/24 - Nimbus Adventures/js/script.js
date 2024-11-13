@@ -1,93 +1,183 @@
 window.onload = function() {
     const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
+    const context = canvas.getContext('2d');
 
-    const gravity = 0.5;
-    const jumpStrength = -10;
+    let currentLevel = 1;
+    let player, enemies, platforms, obstacles, coins, backgroundGradient;
+    let collectedCoins = 0;
 
     const keys = {
-        a: false,
-        w: false,
-        s: false,
-        d: false,
-        f: false,
+        left: false,
+        right: false,
+        up: false
     };
 
-    const weapons = [];
-    const projectiles = [];
+    const gravity = 0.8;
+    const jumpStrength = 15;
+    let playerVelocityY = 0;
+    let isOnGround = false;
 
-    const weaponTypes = [
-        { type: 'knife', color: 'silver' },
-        { type: 'sword', color: 'gold' },
-        { type: 'bat', color: 'brown' },
-        { type: 'bow', color: 'green', projectile: 'arrow' },
-        { type: 'crossbow', color: 'blue', projectile: 'bolt' },
-        { type: 'slingshot', color: 'black', projectile: 'stone' },
-        { type: 'pistol', color: 'gray', projectile: 'bullet' },
-        { type: 'rifle', color: 'darkgray', projectile: 'bullet' },
-        { type: 'rocketLauncher', color: 'red', projectile: 'rocket' },
-        // Adicione mais armas aqui
-    ];
-
-    function spawnWeapon() {
-        const randomIndex = Math.floor(Math.random() * weaponTypes.length);
-        const weaponType = weaponTypes[randomIndex];
-        const weapon = {
-            type: weaponType.type,
-            color: weaponType.color,
-            projectile: weaponType.projectile,
-            x: Math.random() * (canvas.width - 20),
-            y: Math.random() * (canvas.height - 20),
+    async function loadLevel(level) {
+        const response = await fetch(`assets/levels/level${level}.json`);
+        const levelData = await response.json();
+        player = {
+            x: levelData.playerStart.x,
+            y: levelData.playerStart.y,
+            width: 50,
+            height: 50,
+            speed: 5
         };
-        weapons.push(weapon);
+        enemies = levelData.enemies;
+        platforms = levelData.platforms;
+        obstacles = levelData.obstacles;
+        coins = levelData.coins;
+        backgroundGradient = levelData.backgroundGradient;
+        collectedCoins = 0;
     }
 
-    function spawnEnemiesPeriodically() {
-        const maxLevel = 100;
-        const level = Math.floor(Math.random() * maxLevel) + 1;
-        spawnEnemy(level);
+    function drawBackground() {
+        const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, backgroundGradient.color1);
+        gradient.addColorStop(1, backgroundGradient.color2);
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    function gameLoop() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        handleKeys();
-        updatePlayer();
-        updateProjectiles();
-        updateEnemies();
-        drawPlayer();
-        drawProjectiles();
-        drawWeapons();
-        drawEnemies();
-        requestAnimationFrame(gameLoop);
+    function drawPlayer() {
+        context.fillStyle = '#f00';
+        context.fillRect(player.x, player.y, player.width, player.height);
     }
 
+    function drawEnemies() {
+        context.fillStyle = '#00f';
+        enemies.forEach(enemy => {
+            context.fillRect(enemy.x, enemy.y, 50, 50);
+        });
+    }
+    function drawPlatforms() {
+        context.fillStyle = '#0f0';
+        platforms.forEach(platform => {
+            context.fillRect(platform.x, platform.y, platform.width, platform.height);
+        });
+    }
+
+    function drawObstacles() {
+        context.fillStyle = '#ffa500';
+        obstacles.forEach(obstacle => {
+            context.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+        });
+    }
+
+    function drawCoins() {
+        context.fillStyle = '#ffd700';
+        coins.forEach(coin => {
+            context.beginPath();
+            context.arc(coin.x, coin.y, 10, 0, Math.PI * 2, false);
+            context.fill();
+        });
+    }
+    function updatePlayer() {
+        // Movimento horizontal
+        if (keys.left && player.x > 0) {
+            player.x -= player.speed;
+        }
+        if (keys.right && player.x < canvas.width - player.width) {
+            player.x += player.speed;
+        }
+
+        // Aplicar gravidade
+        playerVelocityY += gravity;
+        player.y += playerVelocityY;
+
+        // Verificar colisão com o chão
+        if (player.y + player.height > canvas.height) {
+            player.y = canvas.height - player.height;
+            isOnGround = true;
+            playerVelocityY = 0;
+        } else {
+            isOnGround = false;
+        }
+
+        // Verificar colisão com plataformas
+        platforms.forEach(platform => {
+            if (player.x < platform.x + platform.width &&
+                player.x + player.width > platform.x &&
+                player.y < platform.y + platform.height &&
+                player.y + player.height > platform.y) {
+                
+                if (playerVelocityY > 0) { // Colidindo de cima
+                    player.y = platform.y - player.height;
+                    isOnGround = true;
+                    playerVelocityY = 0;
+                }
+            }
+        });
+
+        // Pular
+        if (keys.up && isOnGround) {
+            playerVelocityY = -jumpStrength;
+        }
+
+        // Coletar moedas
+        coins = coins.filter(coin => {
+            const isCollected = player.x < coin.x + 10 &&
+                                player.x + player.width > coin.x - 10 &&
+                                player.y < coin.y + 10 &&
+                                player.y + player.height > coin.y - 10;
+
+            if (isCollected) {
+                collectedCoins++;
+            }
+
+            return !isCollected;
+        });
+
+        // Verificar se todas as moedas foram coletadas
+        if (collectedCoins >= 5) {
+            currentLevel++;
+            if (currentLevel > 2) {
+                alert("Você completou todos os níveis! Parabéns!");
+            } else {
+                loadLevel(currentLevel).then(() => {
+                    gameLoop();
+                });
+            }
+        }
+    }
     document.addEventListener('keydown', function(event) {
-        if (event.code === 'KeyA') keys.a = true;
-        if (event.code === 'KeyW') keys.w = true;
-        if (event.code === 'KeyS') keys.s = true;
-        if (event.code === 'KeyD') keys.d = true;
-        if (event.code === 'KeyF') keys.f = true;
-    });
-
-    document.addEventListener('keyup', function(event) {
-        if (event.code === 'KeyA') keys.a = false;
-        if (event.code === 'KeyW') keys.w = false;
-        if (event.code === 'KeyS') keys.s = false;
-        if (event.code === 'KeyD') keys.d = false;
-        if (event.code === 'KeyF') keys.f = false;
-    });
-
-    canvas.addEventListener('mousedown', function(event) {
-        if (event.button === 0) {
-            shootProjectile();
+        if (event.key === 'a') {
+            keys.left = true;
+        } else if (event.key === 'd') {
+            keys.right = true;
+        } else if (event.key === 'w') {
+            keys.up = true;
         }
     });
 
-    // Gerar armas aleatórias na tela
-    setInterval(spawnWeapon, 3000);
+    document.addEventListener('keyup', function(event) {
+        if (event.key === 'a') {
+            keys.left = false;
+        } else if (event.key === 'd') {
+            keys.right = false;
+        } else if (event.key === 'w') {
+            keys.up = false;
+        }
+    });
 
-    // Gerar inimigos aleatórios com níveis variados
-    setInterval(spawnEnemiesPeriodically, 5000);
+    async function gameLoop() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
+        updatePlayer();
+        drawPlayer();
+        drawEnemies();
+        drawPlatforms();
+        drawObstacles();
+        drawCoins();
 
-    gameLoop();
+        requestAnimationFrame(gameLoop);
+    }
+
+    loadLevel(currentLevel).then(() => {
+        gameLoop();
+    });
 }
