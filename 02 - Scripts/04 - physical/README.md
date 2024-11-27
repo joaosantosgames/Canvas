@@ -23,7 +23,7 @@ cd nome-do-repositorio
 
 Aqui estão alguns tipos de situações físicas que podem e devem ser exploradas na criação de jogos:
 
-1. Gravidade
+### 1. Gravidade
 A gravidade é uma das forças físicas mais comuns em jogos. Ela pode ser simulada aplicando uma força constante para baixo em todos os objetos no jogo.
 
 ``` javascript
@@ -33,7 +33,8 @@ function applyGravity(object) {
     object.y += object.velocityY;
 }
 ```
-2. Colisões
+
+### 2. Colisões
 A detecção de colisões é essencial para garantir que objetos não atravessem uns aos outros de maneira irrealista. Isso pode ser feito verificando a interseção de objetos e respondendo de acordo.
 
 ``` javascript
@@ -52,7 +53,7 @@ function handleCollision(obj1, obj2) {
 }
 ```
 
-3. Movimento
+### 3. Movimento
 O movimento pode ser simulado aplicando velocidades a objetos e atualizando suas posições.
 
 ``` javascript
@@ -62,8 +63,9 @@ function moveObject(object) {
 }
 ```
 
-4. Forças
+### 4. Forças
 Forças, como empurrões ou puxões, podem ser aplicadas a objetos para simular interações complexas.
+
 ``` javascript
 function applyForce(object, forceX, forceY) {
     object.velocityX += forceX;
