@@ -46,5 +46,4 @@ Este guia fornece orientações sobre como criar uma HUD (Heads-Up Display) efic
 
 ## Conclusão
 
-Uma HUD bem projetada é essencial para a experiência de jogo em jogos de luta. Ela deve ser funcional, intuitiva e esteticamente agradável, fornecendo ao jogador todas as informações necessárias sem distraí-lo da ação principal. Seguindo as orientações e dicas fornecidas neste guia, você estará no caminho certo para criar HUDs eficazes que melhoram a jogabilidade e a satisfação do jogador.
-
+Uma HUD bem projetada é essencial para a experiência de jogo em jogos de luta. Ela deve ser funcional, intuitiva e esteticamente agradável, fornecendo ao jogador todas as informações necessárias sem distraí-lo da ação principal. 
