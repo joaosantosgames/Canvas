@@ -113,3 +113,15 @@ function gameLoop() {
 gameLoop();
 
 ```
+
+## Fontes para Estudar UI e UX 
+
+1. **[Alura](https://www.alura.com.br/artigos/ui-design)**: Alura oferece cursos e artigos sobre UI e UX, explicando conceitos, habilidades necessárias e como se tornar um designer de UI. 
+
+2. **[Des1gnON](https://www.des1gnon.com/2018/10/7-melhores-sites-para-aprender-ux-e-ui-design/)**: Este site lista os melhores sites para aprender UX e UI Design, com dicas e recursos úteis para iniciantes e profissionais. 
+
+3. **[Cubos Academy](https://blog.cubos.academy/ux-ui-design-guia-completo/)**: Um guia completo para iniciantes que explica as diferenças entre UI e UX, além de fornecer dicas sobre como começar na área. 
+
+4. **[Bias Academy](https://bing.com/search?q=como+estudar+sobre+UI+e+UX)**: Oferece dicas para estudar UX/UI Design adequadamente, incluindo tendências, habilidades complementares e prática. 
+
+5. **[YouTube](https://www.youtube.com/watch?v=rbEbsF8o1-8)**: Existem vários vídeos explicativos sobre UI e UX, como este que explica a diferença entre UX e UI Design e como começar uma carreira
